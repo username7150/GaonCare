@@ -1,8 +1,9 @@
-const ExpressError = require("./ErrorHandler/ExpressError")
 
-module.exports.isUserLoggedIn = (req, res, next)=>{
-    if(!req.isAuthenticated()){
-        throw new ExpressError(400 , "User is not logged in")
+
+    module.exports.isUserLoggedIn = (req, res, next)=>{
+        if(!req.isAuthenticated()){
+            req.flash("error" , "Login First to access instant Booking !")
+        return res.redirect("/loginUserForm")
+        }
+        next();
     }
-    next();
-}

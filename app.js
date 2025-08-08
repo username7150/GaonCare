@@ -92,6 +92,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 // app.use((req, res, next)=>{
 //   res.locals.success = req.flash("success")
 //   res.locals.error = req.flash("error")
@@ -169,12 +170,20 @@ app.post("/doctorSignup" , async(req , res)=>{
 
 // EMERGENCY BOOKING
 
-app.get("/Emergency" , async(req, res)=>{
+app.get("/Emergency" ,isUserLoggedIn, async(req, res)=>{
   let allDoctors =  await Doctor.find({});
   res.render("./Emergency.ejs" , {allDoctors})
 })
 
-
+app.get("/signoutUser" , (req, res)=>{
+  req.logout((err)=>{
+    if(err){
+      return next(err);
+    }
+    req.flash("success" , "Your Are LoggedOut !")
+    res.redirect("./GaonCare")
+  })
+})
 
 
 
@@ -188,3 +197,4 @@ app.use((err , req , res , next)=>{
   // res.send(err)
   res.status(status).send(message)
 })
+
