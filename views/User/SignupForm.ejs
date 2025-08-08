@@ -1,0 +1,251 @@
+<% layout('/Layouts/Boilerplate') -%>
+
+<body>
+  <div class="SignUp">
+    <div class="SignupCard card" style="width: 25rem; margin-right: 2rem;">
+      <h3 style="text-decoration: underline; text-align: center">
+        SignUp on GaonCare (Users)
+      </h3>
+      <br />
+      <form action="/userSignup" method="post">
+        <div class="SignupForm">
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter Full Name</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="FullName"
+              name="user[fullname]"
+            />
+          </div>
+          <br />
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter Username</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="Username"
+              name="user[username]"
+            />
+          </div>
+          <br />
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter Password</span
+            >
+            <input
+              type="password"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="Password"
+              name="user[password]"
+            />
+          </div>
+          <br />
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter Email</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="Email"
+              name="user[email]"
+            />
+          </div>
+          <br />
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter Location</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="Village , District, State"
+              name="user[location]"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="margin-top: 0.8rem; width: 23.8rem"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="doctorSignupCard card" style="width: 25rem">
+      <h3 style="text-decoration: underline; text-align: center">
+        SignUp on GaonCare (Doctor)
+      </h3>
+      <br />
+      <form action="/doctorSignup" method="post">
+        <div class="SignupForm">
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter Full Name</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="FullName"
+              name="doctor[fullName]"
+            />
+          </div>
+          <br />
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter profilePhoto url</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="link"
+              name="doctor[profilePhoto]"
+            />
+          </div>
+          <br />
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter ServiceRange</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="in meters"
+              name="doctor[ServiceRange]"
+            />
+          </div><br>
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter Username</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="Username"
+              name="doctor[username]"
+            />
+          </div>
+          <br />
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter Password</span
+            >
+            <input
+              type="password"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="Password"
+              name="doctor[password]"
+            />
+          </div>
+          <br />
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter Email</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="Email"
+              name="doctor[email]"
+            />
+          </div>
+          <br />
+          <div class="input-group input-group-sm">
+            <span
+              style="font-size: 1.1rem; font-weight: 450"
+              class="input-group-text"
+              id="inputGroup-sizing-sm"
+              >Enter Location</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="Village , District, State"
+              name="doctor[location]"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="margin-top: 0.8rem; width: 23rem"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>

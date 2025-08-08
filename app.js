@@ -1,5 +1,9 @@
 const express = require("express");
 const app = express();
+require('dotenv').config();
+const Api = require("./public/js/ApiCalls.js")
+// const geolib = require('geolib');
+const {inRadi} = require("./public/js/inRadius.js")
 // for basic ejs only-->
 const path = require("path");
 app.set("view engine" ,"ejs")
@@ -9,20 +13,32 @@ app.set("views" , path.join(__dirname , "views"));
 const ejsMate = require("ejs-mate")
 app.engine("ejs" , ejsMate);
 
+
+
 //  CUSTOM ERROR HANDLER
 const ExpressError = require("./ErrorHandler/ExpressError.js")
 const WrapAsync =require("./ErrorHandler/WrapAsync.js");
 
+//COOKIES
+const cookieParser = require("cookie-parser")
+app.use(cookieParser("secretcode"));
+
+// EXPRESS SESSIONS
+const session = require('express-session')
+
+// USING (CONNECT-FLASH )TO DISPLAY ANYTHING ADDED AUR CREATED AS A FLASH FOR ONE TIME
+const flash = require('connect-flash');
+app.use(flash()); 
+
+
 // PASSPORT AUTHENTICATION
 const passport =require("passport")
-const localStrategy = require("passport-local")
-const User = require("./Models/User.js")
+const LocalStrategy = require("passport-local")
 
 // to Serve Static files(can leave also )
-// app.use(express.static(path.join(__dirname , "./public")));
 app.use(express.static(path.join(__dirname, "public")));
 
-//FOR MONGOOSE CONNECT TO NODEJS AND DB
+//FOR MONGOOSE CONNECT TO NODE.JS AND DB
 const mongoose = require('mongoose');
 // app.use(express.json()); C USE KAR RHA
 app.use(express.urlencoded({ extended: true }));          //form se bheje gaye data ko read karna aur usse JavaScript object 
@@ -33,33 +49,142 @@ async function main() {
 
 main()
   .then(() => {
-    console.log("connected to DB");
+    console.log("connected to DB"); 
   })
   .catch((err) => {
     console.log(err);
   });
 
 
+//USER MODEL
+const User = require("./Models/User.js");
+const { isUserLoggedIn } = require("./middleware.js");
+
+//DOCTOR MODEL
+const Doctor = require("./Models/Doctor.js");
+
+
 app.listen(8080, () => {
   console.log("server is listening to port 8080 type    http://localhost:8080/GaonCare");
 });
 
-app.use( "/GaonCare" ,(req , res, next)=>{
-  const {token} =req.query;
-  if(token ==="giveaccess"){
-    return next();
-  }else{
-    throw new ExpressError(404,  "Access Denied Bro")
-  }
+
+
+//sessions
+
+const sessionOptions= {
+secret : "secretcode",
+resave :false , 
+saveUninitialized : true ,
+
+cookie :{
+  expires : Date.now() + 7*24*60*60*1000 ,       // 7 din bad login expire ho jayga aur cookie delete ho jaygi
+  maxAge : 7*24*60*60*1000 ,
+  httpOnly : true
+}
+}
+app.use(session(sessionOptions));
+// USING AUTHENTICATION BY PASSPORT
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// app.use((req, res, next)=>{
+//   res.locals.success = req.flash("success")
+//   res.locals.error = req.flash("error")
+//   next();
+// })
+
+
+//ab har route ke liye ek session id create hoke cookie me save ho jaygi 
+
+app.use((req, res, next)=>{
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currUser = req.user;
+  next();
 });
+
+
+
+app.get("/GaonCare" , (req , res)=>{
+    res.render("./index.ejs")
+})
+
+
+app.get("/Gaoncare/userSignupForm" , (req, res , next)=>{
+  res.render("./User/SignupForm.ejs")
+});
+
+app.post("/userSignup" , async(req, res)=>{
+    let password=req.body.user.password
+    let newUser = new User({...req.body.user});
+    let location = req.body.user.location
+    newUser.coordinates =await Api(location);
+      
+    let registeredUser = await User.register(newUser , password);
+    console.log(registeredUser);
+    req.login(registeredUser , ((err)=>{
+            if(err){
+                return next(err);
+            }
+            req.flash("success" , "Welcome   to GaonCare ! ");
+            res.redirect("/GaonCare");
+      }));
+    
+})
+
+app.get("/loginUserForm" , (req, res)=>{
+  res.render("./User/LoginForm.ejs")
+})
+
+app.post("/loginUser" ,passport.authenticate('local', { failureRedirect: '/Gaoncare/userSignupForm',failureFlash : true }),
+ (req , res)=>{
+  req.flash("success","You Are LoggedIn !")
+  res.redirect("./GaonCare")
+})
+
+
+app.post("/doctorSignup" , async(req , res)=>{
+    let password=req.body.doctor.password
+    const newDoctor = new Doctor({...req.body.doctor})
+    console.log(newDoctor)
+     let location = req.body.doctor.location
+    newDoctor.coordinates = await Api(location);
+    let registeredDoctor = await Doctor.register(newDoctor , password)
+    console.log(registeredDoctor)
+    req.login(registeredDoctor , ((err)=>{
+            if(err){
+                return next(err);
+            }
+            req.flash("success" , "New Doctor Registered And LoggedIn !");
+            res.redirect("/GaonCare");
+      }))
+      
+
+})
+
+// EMERGENCY BOOKING
+
+app.get("/Emergency" , async(req, res)=>{
+  let allDoctors =  await Doctor.find({});
+  res.render("./Emergency.ejs" , {allDoctors})
+})
+
+
+
+
+
+
+console.log(inRadi)
+
 
 app.use((err , req , res , next)=>{
   console.log(err.message)
   let {status=500 , message="Koi Msg nahi aya err me "}= err;
   // res.send(err)
   res.status(status).send(message)
-})
-app.get("/GaonCare" , (req , res)=>{
-    res.render("./index.ejs")
-    
 })

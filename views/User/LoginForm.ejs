@@ -1,0 +1,39 @@
+<% layout('/Layouts/Boilerplate') -%>
+<body>
+    <div class="userLoginForm">
+            <h2 style="text-decoration: underline; text-align:center;">Login As Paitient</h2>
+            <br>
+        <form action="/loginUser" method="post">
+            <div class="LoginForm">
+            <div class="input-group input-group-sm">
+              <span style="font-size: 1.1rem; font-weight: 450;" class="input-group-text" id="inputGroup-sizing-sm"
+                >Enter Username</span
+              >
+              <input
+                type="text"
+                class="form-control"
+                aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-sm"
+                placeholder="Username"
+                name="username"
+              />
+            </div><br>
+            <div class="SignupForm">
+            <div class="input-group input-group-sm">
+              <span style="font-size: 1.1rem; font-weight: 450;" class="input-group-text" id="inputGroup-sizing-sm"
+                >Enter Password</span
+              >
+              <input
+                type="password"
+                class="form-control"
+                aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-sm"
+                placeholder="Password"
+                name="password"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary" style=" margin-top: 0.8rem; width:23.8rem">Submit</button>
+        </form>
+    </div>
+    
+</body>
