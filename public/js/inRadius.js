@@ -1,9 +1,9 @@
 const geolib = require('geolib');
 
 
-module.exports.inRadi =
+module.exports.inRadi =(obj1 , obj2 ,rad)=>
     geolib.isPointWithinRadius(
-    { latitude: 51.525, longitude: 7.4575 },
-    { latitude: 51.5175, longitude: 7.478 },
-    5000
+    obj1,
+    obj2,
+    rad
     )

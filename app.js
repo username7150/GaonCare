@@ -4,6 +4,8 @@ require('dotenv').config();
 const Api = require("./public/js/ApiCalls.js")
 // const geolib = require('geolib');
 const {inRadi} = require("./public/js/inRadius.js")
+
+// const handleChange = require("./public/js/handleLocationChange")
 // for basic ejs only-->
 const path = require("path");
 app.set("view engine" ,"ejs")
@@ -112,6 +114,7 @@ app.use((req, res, next)=>{
 
 
 app.get("/GaonCare" , (req , res)=>{
+  console.log(req.user)
     res.render("./index.ejs")
 })
 
@@ -125,7 +128,6 @@ app.post("/userSignup" , async(req, res)=>{
     let newUser = new User({...req.body.user});
     let location = req.body.user.location
     newUser.coordinates =await Api(location);
-      
     let registeredUser = await User.register(newUser , password);
     console.log(registeredUser);
     req.login(registeredUser , ((err)=>{
@@ -168,13 +170,6 @@ app.post("/doctorSignup" , async(req , res)=>{
 
 })
 
-// EMERGENCY BOOKING
-
-app.get("/Emergency" ,isUserLoggedIn, async(req, res)=>{
-  let allDoctors =  await Doctor.find({});
-  res.render("./Emergency.ejs" , {allDoctors})
-})
-
 app.get("/signoutUser" , (req, res)=>{
   req.logout((err)=>{
     if(err){
@@ -185,10 +180,33 @@ app.get("/signoutUser" , (req, res)=>{
   })
 })
 
+// EMERGENCY BOOKING
+
+app.get("/Emergency" ,isUserLoggedIn, async(req, res)=>{
+  let allDoctors = await Doctor.find({});
+  res.render("./Emergency.ejs",{allDoctors} ,nearbyDoctors=false)
+})
 
 
 
-console.log(inRadi)
+app.get("/nearbyDoctor" , async(req , res)=>{
+  const currUser=req.user
+  let allDoctors = await Doctor.find({});
+  const nearbyDoctors = allDoctors.filter((el)=>{
+    console.log({latitude:currUser.coordinates.lat ,longitude: currUser.coordinates.lng })
+    return inRadi(
+      {latitude:currUser.coordinates.lat ,longitude: currUser.coordinates.lng },
+      {latitude :el.coordinates.lat , longitude : el.coordinates.lng},
+      el.serviceRange
+    )
+  })
+  console.log(nearbyDoctors)
+  res.render("./Emergency" , {nearbyDoctors})
+})
+
+
+
+
 
 
 app.use((err , req , res , next)=>{

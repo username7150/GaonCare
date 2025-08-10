@@ -5,8 +5,8 @@ module.exports = async function Api(location) {
   console.log(api)
   const res = await fetch(api);
   const data = await res.json();
-  const lat = data.results[0].annotations.DMS.lat;
-  const lng = data.results[0].annotations.DMS.lng;
+  const lat = data.results[0].geometry.lat;
+  const lng = data.results[0].geometry.lng;
   return { lat , lng };
 }
 
