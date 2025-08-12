@@ -114,14 +114,10 @@ app.use((req, res, next)=>{
 
 
 app.get("/GaonCare" , (req , res)=>{
-  console.log(req.user)
     res.render("./index.ejs")
 })
 
 
-app.get("/Gaoncare/userSignupForm" , (req, res , next)=>{
-  res.render("./User/SignupForm.ejs")
-});
 
 app.post("/userSignup" , async(req, res)=>{
     let password=req.body.user.password
@@ -134,17 +130,14 @@ app.post("/userSignup" , async(req, res)=>{
             if(err){
                 return next(err);
             }
-            req.flash("success" , "Welcome   to GaonCare ! ");
+            req.flash("success" , "Welcome   to GaonCare !You Are Registered and LoggedIn ");
             res.redirect("/GaonCare");
       }));
     
 })
 
-app.get("/loginUserForm" , (req, res)=>{
-  res.render("./User/LoginForm.ejs")
-})
 
-app.post("/loginUser" ,passport.authenticate('local', { failureRedirect: '/Gaoncare/userSignupForm',failureFlash : true }),
+app.post("/loginUser" ,passport.authenticate('local', { failureRedirect: '/Gaoncare',failureFlash : true }),
  (req , res)=>{
   req.flash("success","You Are LoggedIn !")
   res.redirect("./GaonCare")
@@ -166,9 +159,10 @@ app.post("/doctorSignup" , async(req , res)=>{
             req.flash("success" , "New Doctor Registered And LoggedIn !");
             res.redirect("/GaonCare");
       }))
-      
-
 })
+
+
+
 
 app.get("/signoutUser" , (req, res)=>{
   req.logout((err)=>{
