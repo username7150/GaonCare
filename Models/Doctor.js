@@ -13,6 +13,15 @@ const doctorSchema = new Schema({
   serviceRange :{   
     type :Number
   },
+   experience: {
+    type: Number,
+    default: 0 // years
+  },
+
+    specialization: {
+    type: String,
+    required: true
+  },
 
   email: {
     type: String,

@@ -3,7 +3,7 @@
 <body style="overflow-x: hidden">
   <div class="left-text">
     <div class="typingtext">
-        <h2 class="typing" id="typing">Healthcare at Your Doorstep.</h2>
+      <h2 class="typing" id="typing">Healthcare at Your Doorstep.</h2>
     </div>
 
     <h9>We care for rural health and maternity support.</h9>
@@ -15,29 +15,36 @@
     </p>
   </div>
 
-
-
-
   <div class="bookingCard">
     <div class="card bookInstantCard" style="width: 18rem">
-      <img src="https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZG9jdG9yfGVufDB8fDB8fHww" class="card-img-top" alt="..." />
+      <img
+        src="https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZG9jdG9yfGVufDB8fDB8fHww"
+        class="card-img-top"
+        alt="..."
+      />
       <div class="card-body">
         <h5 class="card-title">Book Emergency Visit</h5>
         <p class="card-text">
-         Facing a health emergency? Instantly request a doctor near your area.
+          Facing a health emergency? Instantly request a doctor near your area.
         </p>
         <a href="/Emergency" class="btn btn-primary bookBtn">Book Now</a>
       </div>
     </div>
 
-     <div class="card bookInstantCard" style="width: 18rem">
-      <img  src="https://plus.unsplash.com/premium_photo-1673953510197-0950d951c6d9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZG9jdG9yfGVufDB8fDB8fHww" class="card-img-top" alt="..." />
+    <div class="card bookInstantCard" style="width: 18rem">
+      <img
+        src="https://plus.unsplash.com/premium_photo-1673953510197-0950d951c6d9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZG9jdG9yfGVufDB8fDB8fHww"
+        class="card-img-top"
+        alt="..."
+      />
       <div class="card-body">
         <h5 class="card-title">Book an appointment</h5>
         <p class="card-text">
           Book a trusted doctor for a later time slot as per your comfort
         </p>
-        <a href="#" class="btn btn-primary bookBtn" style=" margin-top: 1.3rem;"> Schedule Now</a>
+        <a href="#" class="btn btn-primary bookBtn" style="margin-top: 1.3rem">
+          Schedule Now</a
+        >
       </div>
     </div>
   </div>
@@ -46,5 +53,219 @@
       src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9jdG9yfGVufDB8fDB8fHww"
     />
   </div> -->
-  
+
+  <!-- Modal -->
+
+  <div
+    class="modal fade"
+    id="exampleModalToggle"
+    aria-hidden="true"
+    aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
+            Login as a ..
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <button
+            class="btn btn-primary"
+            data-bs-target="#exampleModalToggle2"
+            data-bs-toggle="modal"
+            style="margin-right: 3rem; margin-left: 1.3rem"
+          >
+            patient
+          </button>
+          <button
+            class="btn btn-primary"
+            data-bs-target="#exampleModalToggle3"
+            data-bs-toggle="modal"
+          >
+            Doctor
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="exampleModalToggle2"
+    aria-hidden="true"
+    aria-labelledby="exampleModalToggleLabel2"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">
+            For Patients
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <!-- <div class="modal-body"> -->
+
+
+          <div class="form-container modal-body">
+            <div class="tab-buttons">
+              <button class="tab-btn active" data-tab="login-patient">Login</button>
+              <button class="tab-btn" data-tab="signup-patient">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-patient" class="form-content active" action="/loginUser" method="post">
+              <div class="input-box">
+                <input type="text" placeholder="Username" name="username" />
+              </div>
+              <div class="input-box">
+                <input type="password" placeholder="Password" name="password" />
+              </div>
+              <div class="options">
+                <label><input type="checkbox" /> Remember me</label>
+                <a href="#">Forgot Password?</a>
+              </div>
+              <button type="submit" class="submit-btn">SIGN IN</button>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signup-patient" class="form-content" action="/userSignup" method="post">
+              <div class="input-box">
+                <input type="text" placeholder="Full Name" name="user[fullName]"/>
+              </div>
+              <div class="input-box">
+                <input type="text" placeholder="Username" name="user[username]"/>
+              </div>
+              <div class="input-box">
+                <input type="password" placeholder="Password" name="user[password]" />
+              </div>
+              <div class="input-box">
+                <input type="text" placeholder="Email" name="user[email]" />
+              </div>
+              <div class="input-box">
+                <input type="text" placeholder="Location" name="user[location]" />
+              </div>
+
+              <button type="submit" class="submit-btn">SIGN UP</button>
+            </form>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div
+    class="modal fade"
+    id="exampleModalToggle3"
+    aria-hidden="true"
+    aria-labelledby="exampleModalToggleLabel3"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+           <div class="modal-content">
+
+
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">
+            For Doctors
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <!-- <div class="modal-body"> -->
+
+
+          <div class="form-container modal-body">
+            <div class="tab-buttons">
+              <button class="tab-btn active" data-tab="login-doctor">Login</button>
+              <button class="tab-btn" data-tab="signup-doctor">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-doctor" class="form-content active" action="/loginDoctor" method="post">
+              <div class="input-box">
+                <input type="text" placeholder="Username"  id="floatingInput" name="username"/>
+              </div>
+              <div class="input-box">
+                <input type="password" placeholder="Password" name="password" />
+              </div>
+              <div class="options">
+                <label><input type="checkbox" /> Remember me</label>
+                <a href="#">Forgot Password?</a>
+              </div>
+              <button type="submit" class="submit-btn">SIGN IN</button>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signup-doctor" class="form-content" action="/doctorSignup" method="post">
+              <div class="input-box">
+                <input type="text" placeholder="full Name" name="doctor[fullName]"/>
+              </div>
+              <div class="input-box">
+                <input type="text" placeholder="Username"  name="doctor[username]"/> 
+              </div>
+              <div class="input-box">
+                <input type="password" placeholder="Password" name="doctor[password]" />
+              </div>
+              <div class="input-box">
+                <input type="text" placeholder="Profile Photo Url "  name="doctor[profilePhoto]"/>
+              </div>
+              <div class="input-box">
+                <input type="text" placeholder="Specialization"  name="doctor[specialization]"/>
+              </div>
+              <div class="input-box">
+                <input type="text" placeholder=" Your Experience (years)"  name="doctor[experience]"/>
+              </div>
+               <div class="input-box">
+                <input type="text" placeholder="Service Range"  name="doctor[serviceRange]"/>
+              </div>
+               <div class="input-box">
+                <input type="text" placeholder="Email"  name="doctor[email]"/>
+              </div>
+               <div class="input-box">
+                <input type="text" placeholder="Location"  name="doctor[location]"/>
+              </div>
+              
+              <button type="submit" class="submit-btn">SIGN UP</button>
+            </form>
+          </div>
+
+      </div>
+    </div>
+  </div>
 </body>
