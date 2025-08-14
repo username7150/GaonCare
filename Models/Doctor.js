@@ -35,6 +35,11 @@ const doctorSchema = new Schema({
 
   coordinates: { lat: String, lng: String },
 
+  emerFee:{
+    type:Number,
+    default:500
+  },
+
   createdAt: {
     type: Date,
     default: Date.now,

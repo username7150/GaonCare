@@ -81,13 +81,13 @@
                 </div>
                   <div class="doctorInfo2">
                     <button  class="contactBtn"><i class="fa-solid fa-phone"></i> Contact</button>
-                    <button class="btn btn-success Booknow" 
-                    
-                    data-bs-target="#exampleModalToggle"
-                    data-bs-toggle="modal"
-                    data-doctorid="<%=doctor.fullName%>"
-                    data-specialization="<%=doctor.specialization%>"
-                    data-location="<%=doctor.location%>"
+                    <button class="btn btn-success Booknow"
+                    data-latt="<%=doctor.coordinates.lat%>"
+                  data-userlngg="<%=currUser.coordinates.lng%>"
+                  data-userlatt="<%=currUser.coordinates.lat%>"
+                  data-lngg="<%=doctor.coordinates.lng%>"
+                  data-docid="<%=doctor.id%>"
+                  
                     style="padding: 0.3rem 2.3rem">Book Now</button>
                   </div>
 
@@ -117,23 +117,17 @@
                   <p class="card-text"><h6><%=doctor.location%></h6></p>
                   <p id="distancePara"><span><button class="find-Distance"  data-lat="<%=doctor.coordinates.lat%>" data-userlng="<%=currUser.coordinates.lng%>" data-userlat="<%=currUser.coordinates.lat%>" data-lng="<%=doctor.coordinates.lng%> " style="background-color: white; border: none; color: green;" >Check Distance</button></span></p>
                   
-
-                  
                 </div>
                 <div class="doctorInfo2">
                   <button  class="contactBtn"><i class="fa-solid fa-phone"></i> Contact</button>
-                  <button class="btn btn-success Booknow"  data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-doctorid="<%=doctor.fullName%>" 
-                        data-specialization="<%=doctor.specialization%>"
-                      data-location="<%=doctor.location%>"
-                     style="padding: 0.3rem 2.3rem">Book Now</button>
+                  <button class="btn btn-success Booknow"
+                  data-latt="<%=doctor.coordinates.lat%>"
+                  data-userlngg="<%=currUser.coordinates.lng%>"
+                  data-userlatt="<%=currUser.coordinates.lat%>"
+                  data-lngg="<%=doctor.coordinates.lng%>"
+                  data-docid="<%=doctor.id%>"
+                    style="padding: 0.3rem 2.3rem">Book Now</button>
                 </div>
-          
-<!-- 
-                <p class="card-text">
-                  <small class="text-body-secondary"
-                    >Last updated 3 mins ago</small
-                  >
-                </p> -->
               </div>
             </div>
           </div>
@@ -146,8 +140,8 @@
 
 
 <!-- MODAL FOR EMERGENCY BOOKING -->
-
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+<!-- 
+<div class="modal fade" id="exampleModalToggle"  aria-labelledby="exampleModalToggleLabel" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -179,15 +173,14 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Confirm Booking</button>
+        <button class="btn btn-success" id="ConfirmEBooking"  data-bs-toggle="modal" data-bs-target>Confirm Booking</button>
       </div>
     </div>
   </div>
 </div>
 
 
-
-
+ -->
 
 
 

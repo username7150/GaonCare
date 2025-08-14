@@ -1,0 +1,30 @@
+<% layout('/Layouts/Boilerplate') -%>
+<body>
+    <div class="BookingDetails">
+        <h3 >Booking Details </h3>
+
+        <div class="BookingItems">
+            <div>
+                <div class="image" style="background-image:url('<%=doc.profilePhoto%>'); background-size: cover;  background-position: center;">
+            
+                </div>
+                
+            </div>
+            <div class="BookingContent">
+                <h5 style="text-decoration: underline;"><%=doc.fullName%></h5>
+                <br>
+                <div style="line-height: 1.7rem;" class="List">
+                    <li>
+                        <%=doc.location%>
+                    </li>
+                    <li><%=doc.specialization%></li>
+                    <li><b><%=doc.experience%></b> &nbsp;Years of Experience</li>
+                    <li>Email : <%=doc.email%></li>
+
+                </div>
+                <form action="/conEBooking/<%=doc.id%>" method="post"><button class="btn btn-success confBtn" > Confirm Booking</button></form>
+            
+            </div>
+        </div>
+    </div>
+</body>

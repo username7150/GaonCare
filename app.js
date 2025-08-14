@@ -65,6 +65,9 @@ const { isUserLoggedIn } = require("./middleware.js");
 //DOCTOR MODEL
 const Doctor = require("./Models/Doctor.js");
 
+//BOOKING MODEL
+const Booking = require("./Models/Booking.js")
+
 
 app.listen(8080, () => {
   console.log("server is listening to port 8080 type    http://localhost:8080/GaonCare");
@@ -187,7 +190,7 @@ app.get("/nearbyDoctor" , async(req , res)=>{
   const currUser=req.user
   let allDoctors = await Doctor.find({});
   const nearbyDoctors = allDoctors.filter((el)=>{
-    console.log({latitude:currUser.coordinates.lat ,longitude: currUser.coordinates.lng })
+    // console.log({latitude:currUser.coordinates.lat ,longitude: currUser.coordinates.lng })
     return inRadi(
       {latitude:currUser.coordinates.lat ,longitude: currUser.coordinates.lng },
       {latitude :el.coordinates.lat , longitude : el.coordinates.lng},
@@ -199,8 +202,31 @@ app.get("/nearbyDoctor" , async(req , res)=>{
 })
 
 
+app.get("/EBookingForm/:id" , async(req,res)=>{
+ const docId = req.params.id;
+  let doc = await Doctor.findById(docId)
+  res.render("./Booking/EBookingForm.ejs" ,{doc})
+})
 
 
+app.post("/conEBooking/:id" , async(req,res)=>{
+  const docId = req.params;
+  console.log(docId);
+  const currUserLat = req.user.coordinates.lat;
+  const currUserLng = req.user.coordinates.lng;
+  const currUserId = req.user.id;
+
+  const newBooking = new Booking({
+    patient:currUserId,
+    doctor:docId,
+    location:{lat:currUserLat , lng :currUserLng}
+  })
+  await newBooking.save();
+  console.log(newBooking)
+  console.log(" NewBooking Created")
+  req.flash("success" ,`Emergency Booking request sent! Check in My Booking Section`)
+  res.redirect("/GaonCare")
+})
 
 
 app.use((err , req , res , next)=>{

@@ -250,7 +250,7 @@ body {
 }
 
 /* //SignUp Card */
-
+/* 
 .SignupCard {
   height: 30rem !important; 
   margin-top: 0.01rem;
@@ -270,7 +270,7 @@ body {
   width: 26rem !important;
 
 
-}
+} */
 
 
 /* BOOK INSTANT CARD */
@@ -297,17 +297,6 @@ body {
 
 
 
-/* USER LOGIN */
-
-.userLoginForm{
-
-  background-color: white;
-  height: 25rem;
-  width: 25rem;
-  padding: 1rem;
-  border: 1px solid black;
-  border-radius: 1rem;
-}
 
 /* EMERGENCY BOOKING PAGE */
 
@@ -381,4 +370,158 @@ position: relative;   /* Button ka reference point */
  background-color: rgb(50, 92, 207);
  border-radius: 0.5rem;
 
+}
+
+/* LOGIN FORM RESPONSIVENESS */
+
+@media(max-width:500px){
+
+  .patientModal{
+    width: 20rem;
+}
+}
+
+
+/* FINAL BOOKING DETAILS FORM */
+
+/* .BookingDetails{
+  background-color: rgb(241, 238, 238);
+  border-radius: 0.5rem;
+  width: 50rem;
+  height: 30rem;
+  border: 1px solid black ;
+
+  padding: 1rem;
+}
+.image{
+  width:10rem;
+  height: 10rem;
+  border-radius: 50%;
+  border:0.2rem solid black;
+  margin-top: 4rem;
+  margin-left: 2rem;
+
+}
+.Pbody{
+  width:16rem;
+  height: 10rem;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border:1px solid black;
+  margin-top: 0.1rem;
+background-color: black;
+
+}
+
+.BookingItems{
+  display: flex;
+}
+.BookingContent{
+   width:40rem ;
+  height:28rem;
+  padding: 1rem;
+  position: relative;
+}
+
+.confBtn{
+  top: 23rem;
+  left: 22.8rem;
+  position:absolute;
+
+} */
+
+.BookingDetails {
+    background: #fff;
+    border-radius: 0.8rem;
+    padding: 2rem;
+    max-width: 60rem; 
+    margin: 3rem auto;
+    border: 0.05rem solid #ddd;
+    box-shadow: 0 0.4rem 1.2rem rgba(0,0,0,1);
+}
+
+.BookingDetails h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.7rem;
+    font-weight: bold;
+}
+
+.BookingItems {
+    display: flex;
+    align-items: flex-start;
+    gap: 2.5rem;
+    flex-wrap: wrap; 
+}
+
+.image {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    border: 0.25rem solid #ddd;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.BookingContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.BookingContent h5 {
+    font-size: 1.6rem;
+    margin: 0 0 1rem;
+    color: #005d54;
+}
+
+.List {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    line-height: 1.8rem;
+}
+
+.confBtn {
+    align-self: flex-start;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.2rem;
+    border-radius: 0.5rem;
+    background: #009c7b;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.confBtn:hover {
+    background: #00785f;
+}
+
+
+@media (max-width: 48rem) { 
+    .BookingItems {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .image {
+        width: 14rem;
+        height: 14rem;
+    }
+
+    .BookingContent {
+        align-items: center;
+    }
+
+    .List {
+        padding-left: 0;
+        list-style-position: inside;
+    }
+
+    .confBtn {
+        align-self: center;
+    }
 }
