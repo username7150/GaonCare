@@ -37,7 +37,7 @@ const doctorSchema = new Schema({
 
   emerFee:{
     type:Number,
-    default:500
+    default:100
   },
 
   createdAt: {
