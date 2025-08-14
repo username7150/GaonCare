@@ -12,7 +12,7 @@
             </div>
             <div class="BookingContent">
                 <h5 style="text-decoration: underline;"><%=doc.fullName%></h5>
-                <br>
+            
                 <div style="line-height: 1.7rem;" class="List">
                     <li>
                         <%=doc.location%>
@@ -20,8 +20,8 @@
                     <li><%=doc.specialization%></li>
                     <li><b><%=doc.experience%></b> &nbsp;Years of Experience</li>
                     <li>Email : <%=doc.email%></li>
-
                 </div>
+                <div class="feediv"><p>Consultation Fee: &#8377; <span class="fee"><%= doc.emerFee%></span></p></div>
                 <form action="/conEBooking/<%=doc.id%>" method="post"><button class="btn btn-success confBtn" > Confirm Booking</button></form>
             
             </div>

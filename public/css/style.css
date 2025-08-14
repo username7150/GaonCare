@@ -7,7 +7,7 @@
 body {
   margin: 0 !important;
   padding: 0 !important;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 .my-container {
@@ -34,10 +34,13 @@ nav {
 .navbar-nav {
   margin-left: auto;
 }
-.loginBtn{
-  box-shadow: 2px 2px 2px rgba(0, 0, 5, 0.9);
-}
 
+.btn-secondary{
+  border-radius:0.2rem !important;
+  padding:0px!important;
+  width:7.2rem;
+  font-size:0.9rem !important;
+}
 
 /* FOR LOGINMODAL */
 
@@ -382,60 +385,13 @@ position: relative;   /* Button ka reference point */
 }
 
 
-/* FINAL BOOKING DETAILS FORM */
-
-/* .BookingDetails{
-  background-color: rgb(241, 238, 238);
-  border-radius: 0.5rem;
-  width: 50rem;
-  height: 30rem;
-  border: 1px solid black ;
-
-  padding: 1rem;
-}
-.image{
-  width:10rem;
-  height: 10rem;
-  border-radius: 50%;
-  border:0.2rem solid black;
-  margin-top: 4rem;
-  margin-left: 2rem;
-
-}
-.Pbody{
-  width:16rem;
-  height: 10rem;
-  border-top-right-radius: 50%;
-  border-top-left-radius: 50%;
-  border:1px solid black;
-  margin-top: 0.1rem;
-background-color: black;
-
-}
-
-.BookingItems{
-  display: flex;
-}
-.BookingContent{
-   width:40rem ;
-  height:28rem;
-  padding: 1rem;
-  position: relative;
-}
-
-.confBtn{
-  top: 23rem;
-  left: 22.8rem;
-  position:absolute;
-
-} */
 
 .BookingDetails {
     background: #fff;
     border-radius: 0.8rem;
     padding: 2rem;
-    max-width: 60rem; 
-    margin: 3rem auto;
+    width: 40rem; 
+    height:30rem;
     border: 0.05rem solid #ddd;
     box-shadow: 0 0.4rem 1.2rem rgba(0,0,0,1);
 }
@@ -443,7 +399,6 @@ background-color: black;
 .BookingDetails h3 {
     font-size: 1.5rem;
     margin-bottom: 1.7rem;
-    font-weight: bold;
 }
 
 .BookingItems {
@@ -451,6 +406,7 @@ background-color: black;
     align-items: flex-start;
     gap: 2.5rem;
     flex-wrap: wrap; 
+    position: relative;
 }
 
 .image {
@@ -468,20 +424,24 @@ background-color: black;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: absolute;
+    top: 0.01rem;
+    left: 15rem;
 }
 
 .BookingContent h5 {
     font-size: 1.6rem;
     margin: 0 0 1rem;
-    color: #005d54;
+    color:blue;
 }
 
 .List {
     list-style-type: disc;
     padding-left: 1.5rem;
-    font-size: 1.2rem;
+    font-size: 1.0rem;
     margin-bottom: 2rem;
     line-height: 1.8rem;
+    position:relative;
 }
 
 .confBtn {
@@ -493,6 +453,24 @@ background-color: black;
     border: none;
     color: white;
     cursor: pointer;
+    position: absolute;
+    top: 20rem;
+    left: 9rem;
+    border-radius: 0.2rem !important;
+}
+
+.feediv{
+  border:1px solid red;
+  width: 12rem;
+  position: absolute;
+  top: 17rem;
+  left: 7.5rem;
+  height: 2.4 rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .confBtn:hover {
