@@ -22,7 +22,7 @@ const bookingSchema = new Schema({
   },
   price: {
     type: Number,
-    required: true
+    // required: true
   },
   location: {
     lat: Number,
