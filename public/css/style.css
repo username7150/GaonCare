@@ -324,6 +324,7 @@ body {
 .locationInput{
   width: 20rem;
   
+  
 }
 .inputs{
   background-color: white;
@@ -333,6 +334,7 @@ body {
 }
 .searchBar{
   display: flex;
+ height: 2.3rem;
 }
 .emergencyVisit{
   display: flex;

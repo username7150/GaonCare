@@ -14,7 +14,7 @@ const Doctors = [
     experience: 8,
     specialization: "Gynecology",
     email: "aditi.sharma@example.com",
-    profilePhoto: "https://images.unsplash.com/photo-1550831106-0994fe8abcfe?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXdlc29tZSUyMGRvY3RvcnxlbnwwfHwwfHx8MA%3D%3D",
+    profilePhoto: "https://plus.unsplash.com/premium_photo-1661580574627-9211124e5c3f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8ZG9jdG9yfGVufDB8fDB8fHww",
     coordinates: { lat: "25.7580", lng: "84.1205" },
   },
   {
@@ -110,7 +110,7 @@ const Doctors = [
     experience: 5,
     specialization: "Psychiatry",
     email: "shreya.kapoor@example.com",
-    profilePhoto: "https://images.unsplash.com/photo-1550831107-1553da8c8464?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTEyfHxiZWF1dGlmdWwlMjBkb2N0b3J8ZW58MHx8MHx8fDA%3D",
+    profilePhoto: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZG9jdG9yfGVufDB8fDB8fHww",
     coordinates: { lat: "25.7910", lng: "84.2150" },
   },
   {
