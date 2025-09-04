@@ -18,7 +18,7 @@ body {
   margin: 0 auto;
   padding: 0;
   flex: 1;
-  padding-top: 3.25rem;
+  margin-top:0.5rem;
 }
 
 /* NAVBAR */
@@ -316,29 +316,6 @@ body {
   transform: scale(1.03);
   
 }
-
-/* //SignUp Card */
-/* 
-.SignupCard {
-  height: 30rem !important; 
-  margin-top: 0.01rem;
-  padding: 1rem;
-  border: 1px solid black !important;
-  margin-bottom: 2rem !important;
-  width: 26rem !important   ;
-}
-.SignUp{
-  display: flex;
-  
-}
-.doctorSignupCard{
-  height: 30rem !important;
-  padding: 1rem;
-  border: 1px solid black !important;
-  width: 26rem !important;
-
-
-} */
 
 
 /* BOOK INSTANT CARD */
