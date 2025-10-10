@@ -44,9 +44,11 @@ app.use(express.static(path.join(__dirname, "public")));
 const mongoose = require('mongoose'); 
 // app.use(express.json()); C USE KAR RHA
 app.use(express.urlencoded({ extended: true }));          //form se bheje gaye data ko read karna aur usse JavaScript object 
-const DB_URL ="mongodb://127.0.0.1:27017/GaonCare"
+// const DB_URL ="mongodb://127.0.0.1:27017/GaonCare"
+const deployed_Db_Url = process.env.ATLASDB_URL;
+
 async function main() {
-  await mongoose.connect(DB_URL);
+  await mongoose.connect(deployed_Db_Url);  //   changed   DB_URL  to -->  deployed_Db_Url
 }
 
 main()

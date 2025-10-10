@@ -247,7 +247,7 @@ nav {
 body {
   background: linear-gradient(
     to right,
-    rgb(205, 250, 236, 0.9),
+    rgba(162, 243, 217, 0.9),
     rgba(248, 246, 246, 0)
   );
   min-height: 100vh;

@@ -1,4 +1,5 @@
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const deployed_Db_Url = "mongodb+srv://ArunUsername:Arun%40123@cluster0.z64f1cb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const mongoose = require("mongoose");
 const Doctor = require("../Models/Doctor.js");
 
@@ -137,11 +138,11 @@ main()
   });
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/GaonCare");
+  await mongoose.connect(deployed_Db_Url);
 }
 
 const initDB = async () => {
-  await Doctor.deleteMany({});
+  // await Doctor.deleteMany({});
   await Doctor.insertMany(Doctors);
    const data = await Doctor.find({})
    console.log(data)
