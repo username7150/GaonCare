@@ -7,7 +7,7 @@ const {inRadi} = require("./public/js/inRadius.js")
 
 // const handleChange = require("./public/js/handleLocationChange")
 // for basic ejs only-->
-const path = require("path");
+const path = require("path");   
 app.set("view engine" ,"ejs")
 app.set("views" , path.join(__dirname , "views"));
 
@@ -41,7 +41,7 @@ const LocalStrategy = require("passport-local")
 app.use(express.static(path.join(__dirname, "public")));
 
 //FOR MONGOOSE CONNECT TO NODE.JS AND DB
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); 
 // app.use(express.json()); C USE KAR RHA
 app.use(express.urlencoded({ extended: true }));          //form se bheje gaye data ko read karna aur usse JavaScript object 
 const DB_URL ="mongodb://127.0.0.1:27017/GaonCare"
