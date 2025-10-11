@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
+
 const doctorSchema = new Schema({
   fullName: {
     type: String,
@@ -44,8 +45,15 @@ const doctorSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-});
 
+  // Added availability toggle
+  isAvailable: {
+    type: Boolean,
+    default: true
+  }
+
+});
+// ...existing code...
 doctorSchema.plugin(passportLocalMongoose);
 
 const Doctor = mongoose.model("Doctor", doctorSchema);

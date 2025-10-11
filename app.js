@@ -230,6 +230,21 @@ app.post("/conEBooking/:id" , async(req,res)=>{
   res.redirect("/GaonCare")
 })
 
+// Toggle availability (PATCH) for doctor is available or not 
+
+app.patch("/doctor/:id/toggleAvailability", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const doc = await Doctor.findById(id);
+    if (!doc) return res.status(404).send("Doctor not found");
+    doc.isAvailable = !doc.isAvailable; // toggle
+    await doc.save();
+    res.json({ id: doc._id, isAvailable: doc.isAvailable });
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 app.use((err , req , res , next)=>{
   console.log(err.message)
