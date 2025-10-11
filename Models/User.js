@@ -1,6 +1,19 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
+
+
+
+const medicalRecordSchema = new mongoose.Schema({
+  date: { type: Date, default: Date.now },
+  doctorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Doctor' },
+  diagnosis: String,
+  treatment: String,
+  prescriptions: [String],
+  reports: [String],
+  notes: String
+});
+
 const userSchema = new Schema({
   fullName: {
     type: String,
@@ -32,9 +45,15 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+
+  medicalRecords: [medicalRecordSchema] // embedded schema
+
 });
+
+
 userSchema.plugin(passportLocalMongoose);
 
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
+  
