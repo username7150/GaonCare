@@ -1,5 +1,5 @@
 // const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-const deployed_Db_Url = "mongodb+srv://ArunUsername:Arun%40123@cluster0.z64f1cb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const deployed_Db_Url = "mongodb+srv://Arun-Cluster:Arun%40123@arun-cluster0.cxukaeb.mongodb.net/?retryWrites=true&w=majority&appName=Arun-Cluster0";
 const mongoose = require("mongoose");
 const Doctor = require("../Models/Doctor.js");
 
