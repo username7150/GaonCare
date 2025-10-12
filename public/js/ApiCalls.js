@@ -1,5 +1,7 @@
 
+// Opencage-Api
 
+// Rural(village location)  ----> returns latitude and longitude
 module.exports = async function Api(location) {
   const api = `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${process.env.API_KEY}`;
   console.log(api)
