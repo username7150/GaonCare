@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
 require('dotenv').config();
+
+// Opencage-Api
 const Api = require("./public/js/ApiCalls.js")
-// const geolib = require('geolib');
+
+// inRadi function which returns collection of {doctors} jinki jinki service range me paitient ata hai 
 const {inRadi} = require("./public/js/inRadius.js")
 
-// const handleChange = require("./public/js/handleLocationChange")
+
 // for basic ejs only-->
 const path = require("path");   
 app.set("view engine" ,"ejs")
@@ -193,7 +196,9 @@ app.get("/nearbyDoctor" , async(req , res)=>{
   let allDoctors = await Doctor.find({});
   const nearbyDoctors = allDoctors.filter((el)=>{
     // console.log({latitude:currUser.coordinates.lat ,longitude: currUser.coordinates.lng })
-    return inRadi(
+    return inRadi(  //isPointWithinRadius?  //doctor is center point
+
+//returns collection of {doctors} jinki jinki service range me paitient ata hai 
       {latitude:currUser.coordinates.lat ,longitude: currUser.coordinates.lng },
       {latitude :el.coordinates.lat , longitude : el.coordinates.lng},
       el.serviceRange
@@ -246,6 +251,16 @@ app.patch("/doctor/:id/toggleAvailability", async (req, res, next) => {
 });
 
 
+
+
+// for Asha Dashboard
+ app.get("/Asha" , (req, res)=>{
+   res.render("./AshaDashboard.ejs");
+ })
+
+
+
+//Express ka error-handling middleware
 app.use((err , req , res , next)=>{
   console.log(err.message)
   let {status=500 , message="Koi Msg nahi aya err me "}= err;

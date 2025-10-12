@@ -1,4 +1,4 @@
-class ExpressError extends Error{
+class ExpressError extends Error{   //extends means inheritance
     constructor(status , message){
         super();
         this.message= message;
