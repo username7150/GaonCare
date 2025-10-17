@@ -50,8 +50,10 @@
     </div>
   </div>
   </div>
-  <!-- Modal -->
+  <!-- Modal .......................................................................................................................-->
 
+
+  <!-- modal to ask if user is doctor or paitient for login and signup -->
   <div
     class="modal fade"
     id="exampleModalToggle"
@@ -62,38 +64,102 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
-            Login as a ..
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <h5 class="modal-title" id="exampleModalToggleLabel">Choose Account Type</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+
         <div class="modal-body">
-          <button
-            class="btn btn-primary"
-            data-bs-target="#exampleModalToggle2"
-            data-bs-toggle="modal"
-            style="margin-right: 3rem; margin-left: 1.3rem"
-          >
-            patient
-          </button>
-          <button
-            class="btn btn-primary"
-            data-bs-target="#exampleModalToggle3"
-            data-bs-toggle="modal"
-          >
-            Doctor
-          </button>
+          <div class="role-select">
+            
+
+            <div class="role-card" id="role-patient" data-role="patient" tabindex="0" role="button" aria-pressed="false">
+              <div class="indicator">✓</div>
+              <!-- patient image with fallback -->
+              <img
+                src="https://img.icons8.com/color/96/000000/patient.png"
+                class="role-img"
+                alt="Patient"
+                onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;7&quot; r=&quot;3&quot; fill=&quot;%23198754&quot;/&gt;&lt;path d=&quot;M4 20v-1c0-2.8 3.6-5 8-5s8 2.2 8 5v1H4z&quot; fill=&quot;%23198754&quot;/&gt;&lt;/svg&gt;';">
+              <div class="role-label">Patient</div>
+            </div>
+
+            <div class="role-card" id="role-doctor" data-role="doctor" tabindex="0" role="button" aria-pressed="false">
+              <div class="indicator">✓</div>
+              <!-- doctor image with fallback -->
+              <img
+                src="https://unsplash.com/photos/a-person-in-a-white-coat-mCqh2aH6CmU"
+                class="role-img"
+                alt="Doctor"
+                onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27><circle cx=%2712%27 cy=%277%27 r=%273%27 fill=%270d6efd%27/><path d=%27M4 20v-1c0-2.8 3.6-5 8-5s8 2.2 8 5v1H4z%27 fill=%270d6efd%27/></svg>'"
+              />
+              <div class="role-label">Doctor</div>
+            </div>
+          </div>
+
+          <button id="roleNext" class="btn btn-primary w-100 mt-3" disabled>NEXT</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div
+  <style>
+  /* small embedded styles for the role selector */
+.role-select{display:flex;gap:1rem;justify-content:center;align-items:stretch;padding:0.5rem 0;}
+.role-card{width:130px;height:150px;border:2px solid #eee;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:10px;position:relative;transition:all .18s ease;}
+.role-card:focus{outline:none;box-shadow:0 0 0 3px rgba(0,0,0,0.06);}
+.role-card .role-img{width:64px;height:64px;object-fit:contain;margin-bottom:0.5rem;}
+.role-label{font-weight:600;color:#222;}
+.role-card .indicator{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;display:none;align-items:center;justify-content:center;color:#fff;font-size:12px;}
+.role-card.selected{border-width:2px;}
+.role-card.selected.doctor{border-color:#0d6efd;box-shadow:0 6px 18px rgba(13,110,253,0.08);}
+.role-card.selected.patient{border-color:#198754;box-shadow:0 6px 18px rgba(25,135,84,0.08);}
+.role-card.selected .indicator{display:flex;}
+.role-card.selected.doctor .indicator{background:#0d6efd;}
+.role-card.selected.patient .indicator{background:#198754;}
+  </style>
+
+  <script>
+  /* minimal script to handle selection and open patient/doctor modal when NEXT is clicked */
+(function(){
+  const doctor = document.getElementById('role-doctor');
+  const patient = document.getElementById('role-patient');
+  const nextBtn = document.getElementById('roleNext');
+  let selected = null;
+
+  function setSelection(role){
+    selected = role;
+    doctor.classList.toggle('selected', role === 'doctor');
+    doctor.classList.toggle('doctor', role === 'doctor');
+    patient.classList.toggle('selected', role === 'patient');
+    patient.classList.toggle('patient', role === 'patient');
+    doctor.setAttribute('aria-pressed', role === 'doctor');
+    patient.setAttribute('aria-pressed', role === 'patient');
+    nextBtn.disabled = false;
+  }
+
+  doctor.addEventListener('click', () => setSelection('doctor'));
+  patient.addEventListener('click', () => setSelection('patient'));
+  // keyboard support
+  doctor.addEventListener('keydown', (e)=> { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelection('doctor'); }});
+  patient.addEventListener('keydown', (e)=> { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelection('patient'); }});
+
+  nextBtn.addEventListener('click', () => {
+    const current = bootstrap.Modal.getInstance(document.getElementById('exampleModalToggle')) || new bootstrap.Modal(document.getElementById('exampleModalToggle'));
+    current.hide();
+    setTimeout(() => {
+      if (selected === 'patient') {
+        new bootstrap.Modal(document.getElementById('exampleModalToggle2')).show();
+      } else if (selected === 'doctor') {
+        new bootstrap.Modal(document.getElementById('exampleModalToggle3')).show();
+      }
+    }, 200);
+  });
+})();
+  </script>
+
+  <!-- ........................................................................................................... -->
+  
+ <div
     class="modal fade"
     id="exampleModalToggle2"
     aria-hidden="true"
@@ -115,7 +181,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <!-- <div class="modal-body"> -->
+        <!-- <div class="modal-body"  modal ke andr ka box....> -->
 
 
           <div class="form-container modal-body">
@@ -125,7 +191,7 @@
             </div>
 
             <!-- Login Form -->
-            <form id="login-patient" class="form-content active" action="/loginUser" method="post">
+            <form id="login-patient" class="form-content active" action="/user/login" method="post">
               <div class="input-box">
                 <input type="text" placeholder="Username" name="username" />
               </div>
@@ -140,7 +206,7 @@
             </form>
 
             <!-- Sign Up Form -->
-            <form id="signup-patient" class="form-content" action="/userSignup" method="post">
+            <form id="signup-patient" class="form-content" action="/user/signup" method="post">
               <div class="input-box">
                 <input type="text" placeholder="Full Name" name="user[fullName]"/>
               </div>
@@ -213,7 +279,7 @@
             </div>
 
             <!-- Login Form -->
-            <form id="login-doctor" class="form-content active" action="/loginDoctor" method="post">
+            <form id="login-doctor" class="form-content active" action="/doctor/login" method="post">
               <div class="input-box">
                 <input type="text" placeholder="Username"  id="floatingInput" name="username"/>
               </div>
@@ -228,7 +294,7 @@
             </form>
 
             <!-- Sign Up Form -->
-            <form id="signup-doctor" class="form-content" action="/doctorSignup" method="post">
+            <form id="signup-doctor" class="form-content" action="/doctor/signup" method="post">
               <div class="input-box">
                 <input type="text" placeholder="full Name" name="doctor[fullName]"/>
               </div>
@@ -251,6 +317,9 @@
                 <input type="text" placeholder="Service Range"  name="doctor[serviceRange]"/>
               </div>
                <div class="input-box">
+                <input type="text" placeholder="Phone (e.g. +911234567890)" name="doctor[phone]" />
+              </div>
+               <div class="input-box">
                 <input type="text" placeholder="Email"  name="doctor[email]"/>
               </div>
                <div class="input-box">
@@ -264,4 +333,58 @@
       </div>
     </div>
   </div>
+
+ <script src="/socket.io/socket.io.js"></script>
+
+<script>
+  // get user info from server-rendered vars
+  const userType = "<%= userType %>";
+  const userId = "<%= currUser ? currUser._id : '' %>";
+
+  // focus doctor login input when modal opens (handles backdrop issues and mobile tap)
+  document.addEventListener('DOMContentLoaded', () => {
+    const doctorModalEl = document.getElementById('exampleModalToggle3');
+    if (doctorModalEl) {
+      doctorModalEl.addEventListener('shown.bs.modal', () => {
+        // remove any stray backdrops that could block clicks
+        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+        // focus the username input in the doctor login form
+        const input = doctorModalEl.querySelector('#floatingInput') || doctorModalEl.querySelector('input[name="username"]');
+        if (input) {
+          input.focus();
+          // on mobile ensure touch/focus works
+          input.setAttribute('autofocus', 'autofocus');
+        }
+      });
+    }
+
+    // Only connect socket when the current user is a Doctor and logged in
+    if (userType === "Doctor" && userId) {
+      try {
+        const socket = io({ query: { role: 'doctor', id: userId } });
+        socket.on('connect', () => {
+          socket.emit('joinDoctorRoom', userId);
+          console.log("✅ Doctor socket connected and joined room:", "doctor_" + userId);
+        });
+        socket.on('notification', (data) => {
+          // small in-page notification rather than alert
+          try {
+            if (window.Notification && Notification.permission === "granted") {
+              new Notification(data.message);
+            } else {
+              alert("🔔 " + data.message);
+            }
+          } catch (e) {
+            alert("🔔 " + data.message);
+          }
+        });
+      } catch (e) {
+        console.warn('Socket init failed', e);
+      }
+    } else {
+      console.log("Not a logged-in doctor — skipping socket connect.");
+    }
+  });
+</script>
+
 </body>

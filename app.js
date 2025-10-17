@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 require('dotenv').config();
 
-// Opencage-Api
-const Api = require("./public/js/ApiCalls.js")
+
 
 // inRadi function which returns collection of {doctors} jinki jinki service range me paitient ata hai 
 const {inRadi} = require("./public/js/inRadius.js")
@@ -45,7 +44,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //FOR MONGOOSE CONNECT TO NODE.JS AND DB
 const mongoose = require('mongoose'); 
-// app.use(express.json()); C USE KAR RHA
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));          //form se bheje gaye data ko read karna aur usse JavaScript object 
 // const DB_URL ="mongodb://127.0.0.1:27017/GaonCare"
 const deployed_Db_Url = process.env.ATLASDB_URL;
@@ -62,7 +61,7 @@ main()
     console.log(err);
   });
 
-
+// Modal.................................................................
 //USER MODEL
 const User = require("./Models/User.js");
 const { isUserLoggedIn } = require("./middleware.js");
@@ -70,17 +69,51 @@ const { isUserLoggedIn } = require("./middleware.js");
 //DOCTOR MODEL
 const Doctor = require("./Models/Doctor.js");
 
+
 //BOOKING MODEL
 const Booking = require("./Models/Booking.js")
 
+//ASHA MODEL
+const Asha = require("./Models/Asha.js")
 
-app.listen(8080, () => {
-  console.log("server is listening to port 8080 type    http://localhost:8080/GaonCare");
+
+
+// integration of http and Socket.io with express app..................................
+
+const http = require("http");
+const { Server } = require("socket.io");
+
+const server = http.createServer(app);
+const io = new Server(server);
+
+// expose io globally so other files (like notifications.js) can access it
+app.set("io", io);
+
+io.on("connection", (socket) => {
+  console.log("✅ New socket connected:", socket.id);
+
+  socket.on("joinDoctorRoom", (doctorId) => {
+    socket.join(`doctor_${doctorId}`);
+    console.log(`👨‍⚕️ Doctor joined room doctor_${doctorId}`);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("❌ Socket disconnected:", socket.id);
+  });
+});
+
+server.listen(8080, () => {
+  console.log("🚀 Server listening on http://localhost:8080/GaonCare");
 });
 
 
+// app.listen(8080, () => {
+//   console.log("server is listening to port 8080 type    http://localhost:8080/GaonCare");
+// });
 
-//sessions
+
+
+//sessions..............................................................
 
 const sessionOptions= {
 secret : "secretcode",
@@ -94,93 +127,89 @@ cookie :{
 }
 }
 app.use(session(sessionOptions));
-// USING AUTHENTICATION BY PASSPORT
+
+// USING AUTHENTICATION BY PASSPORT........................................................
+
+
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 
-// app.use((req, res, next)=>{
-//   res.locals.success = req.flash("success")
-//   res.locals.error = req.flash("error")
-//   next();
-// })
+// register strategies for each model
+passport.use('patient-local', new LocalStrategy(User.authenticate()));
+passport.use('doctor-local', new LocalStrategy(Doctor.authenticate()));
+passport.use('asha-local', new LocalStrategy(Asha.authenticate()));
+
+// custom serialize/deserialize storing type prefix "Model:id"
+passport.serializeUser((user, done) => {
+  const type = user.constructor.modelName; // e.g. 'User' or 'Doctor' or 'Asha'
+  done(null, `${type}:${user._id}`);
+});
+
+passport.deserializeUser(async (val, done) => {
+  try {
+    const [type, id] = String(val).split(':');
+    let model = null;
+    if (type === 'User') model = User;
+    else if (type === 'Doctor') model = Doctor;
+    else if (type === 'Asha') model = Asha;
+    else return done(new Error('Unknown user type'));
+
+    const user = await model.findById(id).lean(); // lean optional
+    if (!user) return done(null, false);
+    user._model = type; // attach type for views/middleware
+    return done(null, user);
+  } catch (err) {
+    return done(err);
+  }
+});
 
 
 //ab har route ke liye ek session id create hoke cookie me save ho jaygi 
 
-app.use((req, res, next)=>{
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  res.locals.currUser = req.user;
+// *req.user* --> yeh current logged in user ka data hoga jo bhi user login hoga uska data yaha aa jayga
+// *res.locals* -->(Current request ke liye local variables) yeh data hoga jo hum templates me use karna chahte hain
+
+// expose to views
+
+
+// req.user.constructor.modelName === "Patient"
+// req.user._model = req.user.constructor.modelName;
+
+app.use((req, res, next) => {
+  console.log(req.user)
+  res.locals.currUser = req.user || null;
+  res.locals.userType = req.user ? req.user._model : null;
+  res.locals.success = req.flash && req.flash('success');  //success wala jo flash message hoga jo req me ayga wo yaha save hoga
+  res.locals.error = req.flash && req.flash('error');
   next();
 });
-
-
 
 app.get("/GaonCare" , (req , res)=>{
     res.render("./index.ejs")
 })
 
 
+// to use User routes............................................................................................
+const userRouter = require("./routes/User.js");
+app.use("/user" , userRouter);
 
-app.post("/userSignup" , async(req, res)=>{
-    let password=req.body.user.password
-    let newUser = new User({...req.body.user});
-    let location = req.body.user.location
-    newUser.coordinates =await Api(location);
-    let registeredUser = await User.register(newUser , password);
-    console.log(registeredUser);
-    req.login(registeredUser , ((err)=>{
-            if(err){
-                return next(err);
-            }
-            req.flash("success" , "Welcome   to GaonCare !You Are Registered and LoggedIn ");
-            res.redirect("/GaonCare");
-      }));
-    
-})
+// to use Doctor routes.............................................................................
+const doctorRouter = require("./routes/Doctor.js");
+app.use("/doctor" , doctorRouter);
+
+// to use Asha routes.............................................................................
+const ashaRouter =require("./routes/Asha.js");
+app.use("/asha" , ashaRouter);
 
 
-app.post("/loginUser" ,passport.authenticate('local', { failureRedirect: '/Gaoncare',failureFlash : true }),
- (req , res)=>{
-  req.flash("success","You Are LoggedIn !")
-  res.redirect("./GaonCare")
-})
+// for emergency requests routes .............................................................................
+// const bookingsRouter = require("./routes/bookings.js");
+// app.use("/bookings" , bookingsRouter);
 
-
-app.post("/doctorSignup" , async(req , res)=>{
-    let password=req.body.doctor.password
-    const newDoctor = new Doctor({...req.body.doctor})
-    console.log(newDoctor)
-     let location = req.body.doctor.location
-    newDoctor.coordinates = await Api(location);
-    let registeredDoctor = await Doctor.register(newDoctor , password)
-    console.log(registeredDoctor)
-    req.login(registeredDoctor , ((err)=>{
-            if(err){
-                return next(err);
-            }
-            req.flash("success" , "New Doctor Registered And LoggedIn !");
-            res.redirect("/GaonCare");
-      }))
-})
-
-
-
-
-app.get("/signoutUser" , (req, res)=>{
-  req.logout((err)=>{
-    if(err){
-      return next(err);
-    }
-    req.flash("success" , "Your Are LoggedOut !")
-    res.redirect("./GaonCare")
-  })
-})
+const testingRouter = require("./routes/notifications.js");
+const { Socket } = require("socket.io");
+app.use("/notifications" , testingRouter);
 
 // EMERGENCY BOOKING
 
@@ -235,28 +264,8 @@ app.post("/conEBooking/:id" , async(req,res)=>{
   res.redirect("/GaonCare")
 })
 
-// Toggle availability (PATCH) for doctor is available or not 
-
-app.patch("/doctor/:id/toggleAvailability", async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const doc = await Doctor.findById(id);
-    if (!doc) return res.status(404).send("Doctor not found");
-    doc.isAvailable = !doc.isAvailable; // toggle
-    await doc.save();
-    res.json({ id: doc._id, isAvailable: doc.isAvailable });
-  } catch (err) {
-    next(err);
-  }
-});
 
 
-
-
-// for Asha Dashboard
- app.get("/Asha" , (req, res)=>{
-   res.render("./AshaDashboard.ejs");
- })
 
 
 
